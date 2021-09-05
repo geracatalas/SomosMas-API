@@ -1,0 +1,23 @@
+image: ruby:2.7.0
+
+pipelines:
+  default:
+      - step:
+          caches:
+            - bundler
+          script:
+            - bundle install
+            - bundle exec rubocop
+            # TODO: Add Rspec script with MySQL configuration
+          services:
+            - mysql
+definitions:
+  caches:
+    bundler: ./vendor
+  services:
+    mysql:
+      image: mysql:5.6
+      environment:
+        MYSQL_DATABASE: 'somos_mas_project_test'
+        MYSQL_ROOT_PASSWORD: 'password'
+        MYSQL_USER: 'somos_mas_project_test'
